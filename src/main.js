@@ -7,7 +7,6 @@ import ListFilterView from './view/list-filter-view.js';
 import FooterStatisticView from './view/footer-statistic-view.js';
 import {render} from './render.js';
 import FilmsPresenter from './presenter/films-presenter.js';
-import ShowMoreButtonView from './view/show-more-button-view.js';
 
 const siteHeaderElement = document.querySelector('.header');
 const siteMainElement = document.querySelector('.main');
@@ -26,4 +25,3 @@ filmsPresenter.init();
 // render(new MostCommentedView(), siteMainElement);
 
 render(new FooterStatisticView(), siteFooterElement);
-render(new ShowMoreButtonView(), this.filmsComponent.getElement());
