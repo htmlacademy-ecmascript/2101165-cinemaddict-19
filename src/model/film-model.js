@@ -1,9 +1,9 @@
 import {getRandomFilm} from '../mock/movie.js';
 
-const FILMS_COUNT = 5;
+const FILM_COUNT = 5;
 
-export default class FilmModel {
-  films = Array.from({length: FILMS_COUNT}, getRandomFilm);
+export default class TasksModel {
+  films = Array.from({length: FILM_COUNT}, getRandomFilm);
 
   getFilms() {
     return this.films;

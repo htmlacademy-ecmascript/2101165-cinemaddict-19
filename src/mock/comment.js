@@ -3,39 +3,27 @@ import {EMOTIONS, DESCRIPTIONS, TITLES, COMMENTS} from '../const.js';
 
 const mockComment = [
   {
-    idCom: getRandomInteger(1, 200),
-    authorCom: getNamesAndSurnames(),
-    commentCom: getRandomArrayElement(COMMENTS),
-    dateCom: getRandomDate(),
-    emotionCom: getRandomArrayElement(EMOTIONS)
+    id: '42',
+    author: 'Ilya O\'Reilly',
+    comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
+    date: '2019-05-11T16:12:32.554Z',
+    emotion: 'smile'
   },
   {
-    idCom: getRandomInteger(1, 200),
-    authorCom: getNamesAndSurnames(),
-    commentCom: getRandomArrayElement(COMMENTS),
-    dateCom: getRandomDate(),
-    emotionCom: getRandomArrayElement(EMOTIONS)
+    id: '42',
+    author: 'Ilya O\'Reilly',
+    comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
+    date: '2019-05-11T16:12:32.554Z',
+    emotion: 'smile'
   },
   {
-    idCom: getRandomInteger(1, 200),
-    authorCom: getNamesAndSurnames(),
-    commentCom: getRandomArrayElement(COMMENTS),
-    dateCom: getRandomDate(),
-    emotionCom: getRandomArrayElement(EMOTIONS)
+    id: '42',
+    author: 'Ilya O\'Reilly',
+    comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
+    date: '2019-05-11T16:12:32.554Z',
+    emotion: 'smile'
   },
-  {
-    idCom: getRandomInteger(1, 200),
-    authorCom: getNamesAndSurnames(),
-    commentCom: getRandomArrayElement(COMMENTS),
-    dateCom: getRandomDate(),
-    emotionCom: getRandomArrayElement(EMOTIONS)
-  }
 ];
-
-const localComment = {
-  comment: getRandomArrayElement(COMMENTS),
-  emotion: getRandomArrayElement(EMOTIONS)
-};
 
 function getRandomComment() {
   return getRandomArrayElement(mockComment);

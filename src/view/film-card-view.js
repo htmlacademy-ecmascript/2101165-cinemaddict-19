@@ -1,7 +1,7 @@
 import {createElement} from '../render.js';
-import {convertDateYear, getRandomArrayElement, transformDuration} from '../utils.js';
 
 function createFilmCardTemplate(movie) {
+
   const {
     id,
     comments,
@@ -16,11 +16,11 @@ function createFilmCardTemplate(movie) {
       actors,
       release: {
         date,
-        releaseCountry
+        releaseCountry,
       },
       duration,
       genre,
-      description
+      description,
     },
     userDetails: {
       watchlist,
@@ -30,22 +30,18 @@ function createFilmCardTemplate(movie) {
     }
   } = movie;
 
-  // const relDate = convertDateYear(date);
-  // const arrGenre = genre.split(' ');
-  // const correctDuration = transformDuration(duration);
-
   return `<article class="film-card">
     <a class="film-card__link">
       <h3 class="film-card__title">${title}</h3>
-      <p class="film-card__rating">${totalRating}</p>
+      <p class="film-card__rating">${title}</p>
       <p class="film-card__info">
-        <span class="film-card__year">${relDate}</span>
-        <span class="film-card__duration">${correctDuration}</span>
-        <span class="film-card__genre">${arrGenre[0]}</span>
+        <span class="film-card__year">${title}</span>
+        <span class="film-card__duration">${title}</span>
+        <span class="film-card__genre">${title}</span>
       </p>
-      <img src="${poster}" alt="Poster for ${title}" class="film-card__poster">
-      <p class="film-card__description">${description}</p>
-      <span class="film-card__comments">${comments.length} Comments</span>
+      <img src="${title}" alt="Poster for ${title}" class="film-card__poster">
+      <p class="film-card__description">${title}</p>
+      <span class="film-card__comments">${title} Comments</span>
     </a>
     <div class="film-card__controls">
       <button class="film-card__controls-item film-card__controls-item--add-to-watchlist" type="button">Add to watchlist</button>
@@ -55,9 +51,8 @@ function createFilmCardTemplate(movie) {
   </article>`;
 }
 
-
 export default class FilmCardView {
-  constructor(movie) {
+  constructor({movie}) {
     this.movie = movie;
   }
 
