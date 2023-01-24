@@ -3,11 +3,11 @@ import {NAMES, SURNAMES} from './const.js';
 
 const DATE_FORMAT_FULL = 'D MMMM YYYY';
 const DATE_FORMAT = 'YYYY';
-const DATE_FORMAT_FOR_COMMENT = 'YYYY/MM/DD';
+const DATE_FORMAT_FOR_COMMENT = 'YYYY/MM/DD HH:MM';
 
 const convertDateFull = (date) => dayjs(date).format(DATE_FORMAT_FULL);
 const convertDateYear = (date) => dayjs(date).format(DATE_FORMAT);
-const convertDateForComment = (date) => date.js.format(DATE_FORMAT_FOR_COMMENT);
+const convertDateForComment = (date) => dayjs(date).format(DATE_FORMAT_FOR_COMMENT);
 
 const transformDuration = (duration) => duration > 60 ? `${Math.trunc(duration / 60)}h ${duration % 60}m` : `${duration}m`;
 
