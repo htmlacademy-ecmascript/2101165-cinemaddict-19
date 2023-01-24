@@ -1,13 +1,13 @@
 import {createElement} from '../render.js';
 
-function createCommentListTemplate() {
-  return '<ul class="film-details__comments-list"></ul>';
+function createCommentWrapTemplate() {
+  return '<section class="film-details__comments-wrap"></section>';
 }
 
-export default class CommentListView {
+export default class CommentWrapView {
 
   getTemplate() {
-    return createCommentListTemplate();
+    return createCommentWrapTemplate();
   }
 
   getElement() {

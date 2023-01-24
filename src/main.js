@@ -14,15 +14,16 @@ const siteMainElement = document.querySelector('.main');
 const siteFooterElement = document.querySelector('.footer__statistics');
 
 const filmModel = new FilmModel();
+const commentModel = new CommentModel();
+
 const filmPresenter = new FilmPresenter({
   container: siteMainElement,
   filmModel,
 });
 
-const commentModel = new CommentModel();
 const popupPresenter = new PopupPresenter({
   container: siteMainElement,
-  commentModel,
+  filmModel,
 });
 
 render (new ProfileView(), siteHeaderElement);

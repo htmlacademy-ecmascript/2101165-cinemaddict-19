@@ -22,7 +22,11 @@ const NAMES = ['Дима', 'Петр', 'Дольф', 'Адольф', 'Лео'];
 
 const SURNAMES = ['Боченков', 'Петров', 'Лундгрен', 'Сталин', 'Месси'];
 
-const GENRES = ['Comedy', 'Horror', 'Drama'];
+const GENRES = [
+  'Comedy',
+  'Horror',
+  'Drama'
+];
 
 const POSTERS = [
   '../images/posters/made-for-each-other.png',
