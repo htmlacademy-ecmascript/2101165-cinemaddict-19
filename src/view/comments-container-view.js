@@ -1,12 +1,12 @@
 import {createElement} from '../render.js';
 
-function createFilmListContainerTemplate() {
-  return '<div class="films-list__container"></div>';
+function createCommentsContainerTemplate() {
+  return '<div class="film-details__bottom-container"></div>';
 }
 
-export default class FilmListContainerView {
+export default class CommentsContainerView {
   getTemplate() {
-    return createFilmListContainerTemplate();
+    return createCommentsContainerTemplate();
   }
 
   getElement() {

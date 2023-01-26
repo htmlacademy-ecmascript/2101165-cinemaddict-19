@@ -1,26 +1,35 @@
-import ProfileView from './view/profile-view.js';
-import ListSortView from './view/list-sort-view.js';
-import ListFilterView from './view/list-filter-view.js';
-import PopupView from './view/popup-view.js';
-// import TopRatedView from './view/top-rated-view.js';
-// import MostCommentedView from './view/most-commented-view.js';
-import FooterStatisticView from './view/footer-statistic-view.js';
 import {render} from './render.js';
-import FilmsPresenter from './presenter/films-presenter.js';
+import ProfileView from './view/profile-view.js';
+import FilterView from './view/filter-view.js';
+import SortView from './view/sort-view.js';
+import FilmModel from './model/film-model.js';
+import FilmPresenter from './presenter/film-presenter.js';
+import FooterStatisticView from './view/footer-statistic-view.js';
+import PopupPresenter from './presenter/popup-presenter.js';
+
 
 const siteHeaderElement = document.querySelector('.header');
 const siteMainElement = document.querySelector('.main');
 const siteFooterElement = document.querySelector('.footer__statistics');
-const filmsPresenter = new FilmsPresenter({filmsContainer: siteMainElement});
 
-render(new ProfileView(), siteHeaderElement);
-render(new ListFilterView(), siteMainElement);
-render(new ListSortView(), siteMainElement);
+const filmModel = new FilmModel();
 
-filmsPresenter.init();
+const filmPresenter = new FilmPresenter({
+  container: siteMainElement,
+  filmModel
+});
 
-// render(new TopRatedView(), siteMainElement);
-// render(new MostCommentedView(), siteMainElement);
+const popupPresenter = new PopupPresenter({
+  container: siteMainElement,
+  filmModel
+});
+
+render (new ProfileView(), siteHeaderElement);
+render(new FilterView(), siteMainElement);
+render(new SortView(), siteMainElement);
+
+filmPresenter.init();
 
 render(new FooterStatisticView(), siteFooterElement);
-render(new PopupView(), siteMainElement);
+
+popupPresenter.init();
