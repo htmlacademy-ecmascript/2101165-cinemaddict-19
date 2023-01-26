@@ -10,33 +10,39 @@ import CommentsTitleView from '../view/comments-title-view.js';
 import {render} from '../render.js';
 
 export default class PopupPresenter {
-  containerBigComponent = new PopupBigContainerView();
-  containerMediumComponent = new PopupMediumContainerView();
-  containerCommentComponent = new CommentsContainerView();
-  wrapContainerComponent = new CommentWrapView();
-  commentListComponent = new CommentListView();
+  #container = null;
+  #filmModel = null;
+
+  #containerBigComponent = new PopupBigContainerView();
+  #containerMediumComponent = new PopupMediumContainerView();
+  #containerCommentComponent = new CommentsContainerView();
+  #wrapContainerComponent = new CommentWrapView();
+  #commentListComponent = new CommentListView();
+
+  #movie = null;
+  #comments = [];
 
   constructor({container, filmModel}) {
-    this.container = container;
-    this.filmModel = filmModel;
+    this.#container = container;
+    this.#filmModel = filmModel;
   }
 
   init() {
-    this.movie = this.filmModel.getOneFilm();
-    this.comments = this.movie.comments;
+    this.#movie = this.#filmModel.oneFilm;
+    this.#comments = this.#movie.comments;
 
-    render(this.containerBigComponent, this.container);
-    render(this.containerMediumComponent, this.containerBigComponent.getElement());
-    render(new PopupFilmView({movie: this.movie}), this.containerMediumComponent.getElement());
-    render(this.containerCommentComponent, this.containerMediumComponent.getElement());
-    render(this.wrapContainerComponent,this.containerCommentComponent.getElement());
-    render(new CommentsTitleView({comments: this.comments}), this.wrapContainerComponent.getElement());
-    render(this.commentListComponent, this.wrapContainerComponent.getElement());
+    render(this.#containerBigComponent, this.#container);
+    render(this.#containerMediumComponent, this.#containerBigComponent.element);
+    render(new PopupFilmView({movie: this.#movie}), this.#containerMediumComponent.element);
+    render(this.#containerCommentComponent, this.#containerMediumComponent.element);
+    render(this.#wrapContainerComponent,this.#containerCommentComponent.element);
+    render(new CommentsTitleView({comments: this.#comments}), this.#wrapContainerComponent.element);
+    render(this.#commentListComponent, this.#wrapContainerComponent.element);
 
-    for (let i = 0; i < this.comments.length; i++) {
-      render(new CommentView({comment: this.comments[i]}), this.commentListComponent.getElement());
+    for (let i = 0; i < this.#comments.length; i++) {
+      render(new CommentView({comment: this.#comments[i]}), this.#commentListComponent.element);
     }
 
-    render(new NewCommentView(), this.commentListComponent.getElement());
+    render(new NewCommentView(), this.#commentListComponent.element);
   }
 }
