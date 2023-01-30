@@ -7,17 +7,18 @@ import CommentListView from '../view/comment-list-view.js';
 import CommentView from '../view/comment-view.js';
 import NewCommentView from '../view/new-comment-view.js';
 import CommentsTitleView from '../view/comments-title-view.js';
+import PopupWholeView from '../view/popup-whole-view.js';
 import {render} from '../render.js';
 
 export default class PopupPresenter {
   #container = null;
   #filmModel = null;
 
-  // #containerBigComponent = new PopupBigContainerView();
-  // #containerMediumComponent = new PopupMediumContainerView();
-  // #containerCommentComponent = new CommentsContainerView();
-  // #wrapContainerComponent = new CommentWrapView();
-  // #commentListComponent = new CommentListView();
+  #containerBigComponent = new PopupBigContainerView();
+  #containerMediumComponent = new PopupMediumContainerView();
+  #containerCommentComponent = new CommentsContainerView();
+  #wrapContainerComponent = new CommentWrapView();
+  #commentListComponent = new CommentListView();
 
   #movie = null;
   #comments = [];
@@ -28,27 +29,29 @@ export default class PopupPresenter {
   }
 
   init() {
-    // this.#movie = this.#filmModel.oneFilm;
-    // this.#comments = this.#movie.comments;
+    this.#movie = this.#filmModel.oneFilm;
+    this.#comments = this.#movie.comments;
 
-    render(this.#containerBigComponent, this.#container);
-    render(this.#containerMediumComponent, this.#containerBigComponent.element);
-    render(new PopupFilmView({movie: this.#movie}), this.#containerMediumComponent.element);
-    render(this.#containerCommentComponent, this.#containerMediumComponent.element);
-    render(this.#wrapContainerComponent,this.#containerCommentComponent.element);
-    render(new CommentsTitleView({comments: this.#comments}), this.#wrapContainerComponent.element);
-    render(this.#commentListComponent, this.#wrapContainerComponent.element);
+    render(new PopupWholeView({movie: this.#movie}), this.#container);
 
-    for (let i = 0; i < this.#comments.length; i++) {
-      this.#renderComment(this.#comments[i]);
-    }
+    // render(this.#containerBigComponent, this.#container);
+    // render(this.#containerMediumComponent, this.#containerBigComponent.element);
+    // render(new PopupFilmView({movie: this.#movie}), this.#containerMediumComponent.element);
+    // render(this.#containerCommentComponent, this.#containerMediumComponent.element);
+    // render(this.#wrapContainerComponent,this.#containerCommentComponent.element);
+    // render(new CommentsTitleView({comments: this.#comments}), this.#wrapContainerComponent.element);
+    // render(this.#commentListComponent, this.#wrapContainerComponent.element);
 
-    render(new NewCommentView(), this.#commentListComponent.element);
+    // for (let i = 0; i < this.#comments.length; i++) {
+    //   this.#renderComment(this.#comments[i]);
+    // }
+
+    // render(new NewCommentView(), this.#commentListComponent.element);
   }
 
-  #renderComment(comment) {
-    const commentComponent = new CommentView({comment});
+  // #renderComment(comment) {
+  //   const commentComponent = new CommentView({comment});
 
-    render(commentComponent, this.#commentListComponent.element);
-  }
+  //   render(commentComponent, this.#commentListComponent.element);
+  // }
 }

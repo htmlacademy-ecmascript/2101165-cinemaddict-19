@@ -12,6 +12,7 @@ import CommentsTitleView from '../view/comments-title-view.js';
 import CommentView from '../view/comment-view.js';
 import NewCommentView from '../view/new-comment-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
+import PopupWholeView from '../view/popup-whole-view.js';
 import {render} from '../render.js';
 
 export default class FilmPresenter {
@@ -22,11 +23,6 @@ export default class FilmPresenter {
   #containerMediumComponent = new ContainerFilmsMediumlView();
   #containerSmallComponent = new ContainerFilmsSmallView();
 
-  #containerBigPopupComponent = new PopupBigContainerView();
-  #containerMediumPopupComponent = new PopupMediumContainerView();
-  #containerBigCommentComponent = new CommentsContainerView();
-  #containerMediumCommentComponent = new CommentWrapView();
-  #containerSmallCommentComponent = new CommentListView();
 
   #films = [];
   #movie = null;
@@ -54,59 +50,47 @@ export default class FilmPresenter {
   }
 
   #renderFilm(movie) {
-    const filmComponent = new FilmCardView({movie});
-    // const popupComponent = new PopupFilmView({movie});
     const bodyElement = document.querySelector('body');
+    const filmComponent = new FilmCardView({movie});
+    const popupComponent = new PopupWholeView({movie});
 
     const openPopup = () => {
-      // bodyElement.appendChild(popupComponent);
+      // bodyElement.createElement(popupComponent);
+
       bodyElement.classList.add('hide-overflow');
+      render(popupComponent, bodyElement);
 
-      render(this.#containerBigPopupComponent, bodyElement);
-      render(this.#containerMediumPopupComponent, this.#containerBigPopupComponent.element);
-      render(new PopupFilmView({movie: this.#movie}), this.#containerMediumPopupComponent.element);
-      render(this.#containerBigCommentComponent, this.#containerMediumPopupComponent.element);
-      render(this.#containerMediumCommentComponent,this.#containerBigCommentComponent.element);
-      render(new CommentsTitleView({comments: this.#comments}), this.#containerMediumCommentComponent.element);
-      render(this.#containerSmallCommentComponent, this.#containerMediumCommentComponent.element);
 
-      for (let i = 0; i < this.#comments.length; i++) {
-        this.#renderComment(this.#comments[i]);
-      }
+      // for (let i = 0; i < this.#comments.length; i++) {
+      //   this.render(commentComponent, this.#containerSmallCommentComponent.element);
+      // }
 
-      render(new NewCommentView(), this.#containerSmallCommentComponent.element);
     };
 
-    // const closePopup = () => {
-    //   bodyElement.removeChild(popupComponent);
-    //   bodyElement.classList.remove('hide-overflow');
-    // };
+    const closePopup = () => {
+      // bodyElement.removeChild(popupComponent);
+      bodyElement.classList.remove('hide-overflow');
+    };
 
     const escKeyDownHandler = (evt) => {
       if (evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
+        closePopup();
         document.removeEventListener('keydown', escKeyDownHandler);
       }
     };
 
     filmComponent.element.querySelector('.film-card__link').addEventListener('click', () => {
       openPopup();
-
       document.addEventListener('keydown', escKeyDownHandler);
     });
 
-    // popupComponent.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
-    //   closePopup();
+    popupComponent.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
+      closePopup();
 
-    //   document.removeEventListener('keydown', escKeyDownHandler);
-    // });
+      document.removeEventListener('keydown', escKeyDownHandler);
+    });
 
     render(filmComponent, this.#containerSmallComponent.element);
-  }
-
-  #renderComment(comment) {
-    const commentComponent = new CommentView({comment});
-
-    render(commentComponent, this.#containerSmallCommentComponent.element);
   }
 }

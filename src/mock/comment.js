@@ -29,4 +29,23 @@ function getRandomComment() {
   return getRandomArrayElement(mockComment);
 }
 
-export {getRandomComment, mockComment};
+
+
+const arrComm = [
+
+  {
+    id: 2,
+    author: 'qwe',
+    comment: 'ad',
+    date: 'sdaf',
+    emotion: 'sdf'
+  },
+  {
+    id: 2,
+    author: 'qwe',
+    comment: 'ad',
+    date: 'sdaf',
+    emotion: 'sdf'
+  },
+];
+export {getRandomComment, mockComment, arrComm};
