@@ -3,28 +3,28 @@ import {EMOTIONS, COMMENTS} from '../const.js';
 
 const mockComments = [
   {
-    id: 1,
+    id: '1',
     author: getNamesAndSurnames(),
     comment: getRandomArrayElement(COMMENTS),
     date: getRandomDate(),
     emotion: getRandomArrayElement(EMOTIONS)
   },
   {
-    id: 2,
+    id: '2',
     author: getNamesAndSurnames(),
     comment: getRandomArrayElement(COMMENTS),
     date: getRandomDate(),
     emotion: getRandomArrayElement(EMOTIONS)
   },
   {
-    id: 3,
+    id: '3',
     author: getNamesAndSurnames(),
     comment: getRandomArrayElement(COMMENTS),
     date: getRandomDate(),
     emotion: getRandomArrayElement(EMOTIONS)
   },
   {
-    id: 4,
+    id: '4',
     author: getNamesAndSurnames(),
     comment: getRandomArrayElement(COMMENTS),
     date: getRandomDate(),

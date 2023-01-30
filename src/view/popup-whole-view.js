@@ -114,24 +114,27 @@ function createPopupFilmTemplate(movie) {
   </div>`;
 }
 
-// function createCommentTemplate(commentList) {
+function createCommentTemplate(comments) {
+  let filmComments = '';
+  comments.forEach((element)=>{
+    filmComments += `<li class="film-details__comment">
+  <span class="film-details__comment-emoji">
+    <img src="./images/emoji/${element.emotion}.png" width="55" height="55" alt="emoji-smile">
+  </span>
+  <div>
+    <p class="film-details__comment-text">${element.comment}</p>
+    <p class="film-details__comment-info">
+      <span class="film-details__comment-author">${element.author}</span>
+      <span class="film-details__comment-day">${convertDateForComment(element.date)}</span>
+      <button class="film-details__comment-delete">Delete</button>
+    </p>
+  </div>
+  </li>`;
+  });
 
-//   commentList.map((comment) =>
-//     `<li class="film-details__comment">
-//         <span class="film-details__comment-emoji">
-//         <img src="${comment.emoji}" width="55" height="55" alt="emoji-smile">
-//         </span>
-//         <div>
-//           <p class="film-details__comment-text">${comment.text}</p>
-//           <p class="film-details__comment-info">
-//           <span class="film-details__comment-author">${comment.author}</span>
-//           <span class="film-details__comment-day">${comment.date}</span>
-//           <button class="film-details__comment-delete">Delete</button>
-//           </p>
-//         </div>
-//     </li>`
-//   ).join('');
-// }
+  return filmComments;
+
+}
 
 function createNewCommentTemplate() {
   return `<form class="film-details__new-comment" action="" method="get">
@@ -196,7 +199,7 @@ function createPopupWholeTemplate(movie, commentsList) {
   } = movie;
 
   const popupFilmTemplate = createPopupFilmTemplate(movie);
-  // const commentTemplate = createCommentTemplate(commentsList);
+  const commentTemplate = createCommentTemplate(commentsList);
   const newCommentTemplate = createNewCommentTemplate();
 
   return `<section class="film-details">
@@ -210,7 +213,7 @@ function createPopupWholeTemplate(movie, commentsList) {
 
           <ul class="film-details__comments-list">
 
-
+          ${commentTemplate}
 
           </ul>
 
@@ -225,13 +228,15 @@ function createPopupWholeTemplate(movie, commentsList) {
 export default class PopupWholeView {
   #element = null;
   #movie = null;
+  #comments = [];
 
-  constructor({movie}) {
+  constructor({movie, comments}) {
     this.#movie = movie;
+    this.#comments = comments;
   }
 
   get template() {
-    return createPopupWholeTemplate(this.#movie);
+    return createPopupWholeTemplate(this.#movie, this.#comments);
   }
 
   get element() {
