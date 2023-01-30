@@ -1,7 +1,7 @@
 import {getRandomArrayElement, getNamesAndSurnames, getRandomDate} from '../utils.js';
 import {EMOTIONS, COMMENTS} from '../const.js';
 
-const mockComment = [
+const mockComments = [
   {
     id: 1,
     author: getNamesAndSurnames(),
@@ -23,29 +23,13 @@ const mockComment = [
     date: getRandomDate(),
     emotion: getRandomArrayElement(EMOTIONS)
   },
-];
-
-function getRandomComment() {
-  return getRandomArrayElement(mockComment);
-}
-
-
-
-const arrComm = [
-
   {
-    id: 2,
-    author: 'qwe',
-    comment: 'ad',
-    date: 'sdaf',
-    emotion: 'sdf'
-  },
-  {
-    id: 2,
-    author: 'qwe',
-    comment: 'ad',
-    date: 'sdaf',
-    emotion: 'sdf'
+    id: 4,
+    author: getNamesAndSurnames(),
+    comment: getRandomArrayElement(COMMENTS),
+    date: getRandomDate(),
+    emotion: getRandomArrayElement(EMOTIONS)
   },
 ];
-export {getRandomComment, mockComment, arrComm};
+
+export {mockComments};

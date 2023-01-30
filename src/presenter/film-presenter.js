@@ -36,7 +36,7 @@ export default class FilmPresenter {
   init() {
     this.#films = [...this.#model.films];
     this.#movie = this.#model.oneFilm;
-    this.#comments = this.#movie.comments;
+    this.#comments = [...this.#model.comments];
 
     render(this.#containerBigComponent, this.#container);
     render(this.#containerMediumComponent, this.#containerBigComponent.element);
@@ -49,14 +49,13 @@ export default class FilmPresenter {
     render(new ShowMoreButtonView(), this.#containerMediumComponent.element);
   }
 
-  #renderFilm(movie) {
+  #renderFilm(movie, comments) {
     const bodyElement = document.querySelector('body');
     const filmComponent = new FilmCardView({movie});
-    const popupComponent = new PopupWholeView({movie});
+    const popupComponent = new PopupWholeView({movie, comments});
 
     const openPopup = () => {
-      // bodyElement.createElement(popupComponent);
-
+      bodyElement.appendChild(popupComponent.element);
       bodyElement.classList.add('hide-overflow');
       render(popupComponent, bodyElement);
 

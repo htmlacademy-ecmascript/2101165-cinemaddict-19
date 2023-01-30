@@ -1,11 +1,11 @@
-import {getRandomComment} from '../mock/comment.js';
+// import {getRandomComment} from '../mock/comment.js';
 
-const COMMENTS_COUNT = 5;
+// const COMMENTS_COUNT = 5;
 
-export default class CommentModel {
-  #comments = Array.from({length: COMMENTS_COUNT}, getRandomComment);
+// export default class CommentModel {
+//   #comments = Array.from({length: COMMENTS_COUNT}, getRandomComment);
 
-  get comments() {
-    return this.#comments;
-  }
-}
+//   get comments() {
+//     return this.#comments;
+//   }
+// }

@@ -114,24 +114,24 @@ function createPopupFilmTemplate(movie) {
   </div>`;
 }
 
-function createCommentTemplate(commentList) {
+// function createCommentTemplate(commentList) {
 
-  commentList.map((comment) =>
-    `<li class="film-details__comment">
-        <span class="film-details__comment-emoji">
-        <img src="${comment.emoji}" width="55" height="55" alt="emoji-smile">
-        </span>
-        <div>
-          <p class="film-details__comment-text">${comment.text}</p>
-          <p class="film-details__comment-info">
-          <span class="film-details__comment-author">${comment.author}</span>
-          <span class="film-details__comment-day">${comment.date}</span>
-          <button class="film-details__comment-delete">Delete</button>
-          </p>
-        </div>
-    </li>`
-  ).join('');
-}
+//   commentList.map((comment) =>
+//     `<li class="film-details__comment">
+//         <span class="film-details__comment-emoji">
+//         <img src="${comment.emoji}" width="55" height="55" alt="emoji-smile">
+//         </span>
+//         <div>
+//           <p class="film-details__comment-text">${comment.text}</p>
+//           <p class="film-details__comment-info">
+//           <span class="film-details__comment-author">${comment.author}</span>
+//           <span class="film-details__comment-day">${comment.date}</span>
+//           <button class="film-details__comment-delete">Delete</button>
+//           </p>
+//         </div>
+//     </li>`
+//   ).join('');
+// }
 
 function createNewCommentTemplate() {
   return `<form class="film-details__new-comment" action="" method="get">
@@ -165,7 +165,7 @@ function createNewCommentTemplate() {
 </form>`;
 }
 
-function createPopupWholeTemplate(movie) {
+function createPopupWholeTemplate(movie, commentsList) {
 
   const {
     // id,
@@ -196,7 +196,7 @@ function createPopupWholeTemplate(movie) {
   } = movie;
 
   const popupFilmTemplate = createPopupFilmTemplate(movie);
-  const commentTemplate = createCommentTemplate(comments);
+  // const commentTemplate = createCommentTemplate(commentsList);
   const newCommentTemplate = createNewCommentTemplate();
 
   return `<section class="film-details">
@@ -210,7 +210,7 @@ function createPopupWholeTemplate(movie) {
 
           <ul class="film-details__comments-list">
 
-          ${commentTemplate}
+
 
           </ul>
 

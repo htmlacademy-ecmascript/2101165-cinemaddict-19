@@ -16,12 +16,10 @@ const siteMainElement = document.querySelector('.main');
 const siteFooterElement = document.querySelector('.footer__statistics');
 
 const filmModel = new FilmModel();
-const commentModel = new CommentModel();
 
 const filmPresenter = new FilmPresenter({
   container: siteMainElement,
   filmModel,
-  commentModel
 });
 
 // const popupPresenter = new PopupPresenter({
