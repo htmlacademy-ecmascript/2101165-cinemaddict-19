@@ -1,6 +1,5 @@
 import {getRandomArrayElement, getRandomInteger, getNamesAndSurnames, getRandomDate, getRandomArrayElements} from '../utils.js';
 import {DESCRIPTIONS, TITLES, GENRES, POSTERS, COUNTRIES} from '../const.js';
-import {mockComment} from './comment.js';
 
 const mockMovies = [
   {
