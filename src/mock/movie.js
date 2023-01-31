@@ -1,11 +1,10 @@
 import {getRandomArrayElement, getRandomInteger, getNamesAndSurnames, getRandomDate, getRandomArrayElements} from '../utils.js';
 import {DESCRIPTIONS, TITLES, GENRES, POSTERS, COUNTRIES} from '../const.js';
-import {mockComment} from './comment.js';
 
 const mockMovies = [
   {
     id: getRandomInteger(1, 200),
-    comments: [mockComment[1], mockComment[2]],
+    comments: ['1', '2', '4'],
     filmInfo: {
       title: getRandomArrayElement(TITLES),
       alternativeTitle: getRandomArrayElement(TITLES),
@@ -26,7 +25,7 @@ const mockMovies = [
   },
   {
     id: getRandomInteger(1, 200),
-    comments: [mockComment[0]],
+    comments: ['2'],
     filmInfo: {
       title: getRandomArrayElement(TITLES),
       alternativeTitle: getRandomArrayElement(TITLES),
@@ -47,7 +46,7 @@ const mockMovies = [
   },
   {
     id: getRandomInteger(1, 200),
-    comments: [mockComment[1], mockComment[0], mockComment[2], mockComment[1]],
+    comments: ['4', '3', '2', '1'],
     filmInfo: {
       title: getRandomArrayElement(TITLES),
       alternativeTitle: getRandomArrayElement(TITLES),

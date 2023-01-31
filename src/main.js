@@ -5,8 +5,6 @@ import SortView from './view/sort-view.js';
 import FilmModel from './model/film-model.js';
 import FilmPresenter from './presenter/film-presenter.js';
 import FooterStatisticView from './view/footer-statistic-view.js';
-import PopupPresenter from './presenter/popup-presenter.js';
-
 
 const siteHeaderElement = document.querySelector('.header');
 const siteMainElement = document.querySelector('.main');
@@ -16,12 +14,7 @@ const filmModel = new FilmModel();
 
 const filmPresenter = new FilmPresenter({
   container: siteMainElement,
-  filmModel
-});
-
-const popupPresenter = new PopupPresenter({
-  container: siteMainElement,
-  filmModel
+  filmModel,
 });
 
 render (new ProfileView(), siteHeaderElement);
@@ -31,5 +24,3 @@ render(new SortView(), siteMainElement);
 filmPresenter.init();
 
 render(new FooterStatisticView(), siteFooterElement);
-
-popupPresenter.init();

@@ -1,5 +1,5 @@
 import {createElement} from '../render.js';
-import {convertDateFull, transformDuration } from '../utils.js';
+import {convertDateFull, transformDuration, convertDateForComment} from '../utils.js';
 
 function createGenresTemplate(genre) {
   return `<td class="film-details__term">Genre${genre.length > 1 ? 's' : ''}</td>
@@ -114,16 +114,129 @@ function createPopupFilmTemplate(movie) {
   </div>`;
 }
 
-export default class PopupFilmView {
+function createCommentTemplate(comments) {
+  let filmComments = '';
+  comments.forEach((element)=>{
+    filmComments += `<li class="film-details__comment">
+  <span class="film-details__comment-emoji">
+    <img src="./images/emoji/${element.emotion}.png" width="55" height="55" alt="emoji-smile">
+  </span>
+  <div>
+    <p class="film-details__comment-text">${element.comment}</p>
+    <p class="film-details__comment-info">
+      <span class="film-details__comment-author">${element.author}</span>
+      <span class="film-details__comment-day">${convertDateForComment(element.date)}</span>
+      <button class="film-details__comment-delete">Delete</button>
+    </p>
+  </div>
+  </li>`;
+  });
+
+  return filmComments;
+
+}
+
+function createNewCommentTemplate() {
+  return `<form class="film-details__new-comment" action="" method="get">
+  <div class="film-details__add-emoji-label"></div>
+
+  <label class="film-details__comment-label">
+    <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
+  </label>
+
+  <div class="film-details__emoji-list">
+    <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile">
+    <label class="film-details__emoji-label" for="emoji-smile">
+      <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
+    </label>
+
+    <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="sleeping">
+    <label class="film-details__emoji-label" for="emoji-sleeping">
+      <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
+    </label>
+
+    <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-puke" value="puke">
+    <label class="film-details__emoji-label" for="emoji-puke">
+      <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
+    </label>
+
+    <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="angry">
+    <label class="film-details__emoji-label" for="emoji-angry">
+      <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
+    </label>
+  </div>
+</form>`;
+}
+
+function createPopupWholeTemplate(movie, commentsList) {
+
+  const {
+    // id,
+    comments,
+    // filmInfo: {
+    //   title,
+    //   alternativeTitle,
+    //   totalRating,
+    //   poster,
+    //   ageRating,
+    //   director,
+    //   writers,
+    //   actors,
+    //   release: {
+    //     date,
+    //     releaseCountry
+    //   },
+    //   duration,
+    //   genre,
+    //   description
+    // },
+    // userDetails: {
+    //   watchlist,
+    //   alreadyWatched,
+    //   watchingDate,
+    //   favorite
+    // }
+  } = movie;
+
+  const popupFilmTemplate = createPopupFilmTemplate(movie);
+  const commentTemplate = createCommentTemplate(commentsList);
+  const newCommentTemplate = createNewCommentTemplate();
+
+  return `<section class="film-details">
+    <div class="film-details__inner">
+
+      ${popupFilmTemplate}
+
+      <div class="film-details__bottom-container">
+        <section class="film-details__comments-wrap">
+          <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
+
+          <ul class="film-details__comments-list">
+
+          ${commentTemplate}
+
+          </ul>
+
+          ${newCommentTemplate}
+
+        </section>
+      </div>
+    </div>
+  </section>`;
+}
+
+export default class PopupWholeView {
   #element = null;
   #movie = null;
+  #comments = [];
 
-  constructor({movie}) {
+  constructor({movie, comments}) {
     this.#movie = movie;
+    this.#comments = comments;
   }
 
   get template() {
-    return createPopupFilmTemplate(this.#movie);
+    return createPopupWholeTemplate(this.#movie, this.#comments);
   }
 
   get element() {
