@@ -43,28 +43,29 @@ export default class FilmPresenter {
     this.#comments = [...this.#model.comments];
 
     if (this.#films.length > 0) {
+      const slicedFilms = this.#films.slice(0, Math.min(this.#films.length, FILM_COUNT_PER_STEP));
+
       render(this.#filterComponent, this.#container);
       render(this.#SortComponent, this.#container);
       render(this.#containerBigComponent, this.#container);
       render(this.#containerMediumComponent, this.#containerBigComponent.element);
       render(this.#containerSmallComponent, this.#containerMediumComponent.element);
 
-      for (let i = 0; i < Math.min(this.#films.length, FILM_COUNT_PER_STEP); i++) {
+      slicedFilms.forEach((slicedFilm) => {
         filmComments = [];
-        this.#films[i].comments.forEach((id) => {
-          for(let j = 0; j < this.#comments.length; j++){
-            if(this.#comments[j].id === id){
-              filmComments.push(this.#comments[j]);
+        slicedFilm.comments.forEach((id) => {
+          this.#comments.forEach((comment) => {
+            if (comment.id === id) {
+              filmComments.push(comment);
             }
-          }
+          });
         });
-        this.#renderFilm(this.#films[i], filmComments);
-      }
+        this.#renderFilm(slicedFilm, filmComments);
+      });
 
       if (this.#films.length > FILM_COUNT_PER_STEP) {
         this.#showMoreButtonComponent = new ShowMoreButtonView();
         render(this.#showMoreButtonComponent, this.#containerMediumComponent.element);
-
         this.#showMoreButtonComponent.element.addEventListener('click', this.#showMoreButtonClickHandler);
       }
 
