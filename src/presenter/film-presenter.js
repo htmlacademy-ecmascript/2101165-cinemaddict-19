@@ -1,25 +1,37 @@
+import FilterView from '../view/filter-view.js';
+import SortView from '../view/sort-view.js';
 import ContainerFilmsBigView from '../view/container-films-big-view.js';
 import ContainerFilmsMediumlView from '../view/container-films-medium-view.js';
 import ContainerFilmsSmallView from '../view/container-films-small-view.js';
 import FilmCardView from '../view/film-card-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import PopupWholeView from '../view/popup-whole-view.js';
+import EmptyView from '../view/empty-view.js';
 import {render} from '../render.js';
+import NoFilterView from '../view/no-filter-view.js';
+import FooterStatisticView from '../view/footer-statistic-view.js';
 
 let filmComments = [];
+
+const FILM_COUNT_PER_STEP = 5;
+
+const siteFooterStatisticElement = document.querySelector('.footer__statistics');
 
 export default class FilmPresenter {
   #container = null;
   #model = null;
 
+  #filterComponent = new FilterView();
+  #SortComponent = new SortView();
   #containerBigComponent = new ContainerFilmsBigView();
   #containerMediumComponent = new ContainerFilmsMediumlView();
   #containerSmallComponent = new ContainerFilmsSmallView();
-
+  #footerStatisticComponent = new FooterStatisticView();
+  #showMoreButtonComponent = null;
 
   #films = [];
-  #movie = null;
   #comments = [];
+  #renderedFilmCount = FILM_COUNT_PER_STEP;
 
   constructor({container, filmModel}) {
     this.#container = container;
@@ -28,27 +40,57 @@ export default class FilmPresenter {
 
   init() {
     this.#films = [...this.#model.films];
-    this.#movie = this.#model.oneFilm;
     this.#comments = [...this.#model.comments];
 
-    render(this.#containerBigComponent, this.#container);
-    render(this.#containerMediumComponent, this.#containerBigComponent.element);
-    render(this.#containerSmallComponent, this.#containerMediumComponent.element);
+    if (this.#films.length > 0) {
+      const slicedFilms = this.#films.slice(0, Math.min(this.#films.length, FILM_COUNT_PER_STEP));
 
-    for (let i = 0; i < this.#films.length; i++) {
-      filmComments = [];
-      this.#films[i].comments.forEach((id) => {
-        for(let j = 0; j < this.#comments.length; j++){
-          if(this.#comments[j].id === id){
-            filmComments.push(this.#comments[j]);
-          }
-        }
+      render(this.#filterComponent, this.#container);
+      render(this.#SortComponent, this.#container);
+      render(this.#containerBigComponent, this.#container);
+      render(this.#containerMediumComponent, this.#containerBigComponent.element);
+      render(this.#containerSmallComponent, this.#containerMediumComponent.element);
+
+      slicedFilms.forEach((slicedFilm) => {
+        filmComments = [];
+        slicedFilm.comments.forEach((id) => {
+          this.#comments.forEach((comment) => {
+            if (comment.id === id) {
+              filmComments.push(comment);
+            }
+          });
+        });
+        this.#renderFilm(slicedFilm, filmComments);
       });
-      this.#renderFilm(this.#films[i], filmComments);
-    }
 
-    render(new ShowMoreButtonView(), this.#containerMediumComponent.element);
+      if (this.#films.length > FILM_COUNT_PER_STEP) {
+        this.#showMoreButtonComponent = new ShowMoreButtonView();
+        render(this.#showMoreButtonComponent, this.#containerMediumComponent.element);
+        this.#showMoreButtonComponent.element.addEventListener('click', this.#showMoreButtonClickHandler);
+      }
+
+      render(this.#footerStatisticComponent, siteFooterStatisticElement);
+
+    } else {
+      render(new NoFilterView(), this.#container);
+      render(new EmptyView(), this.#container);
+      siteFooterStatisticElement.innerHTML = '<p>0 movies inside</p>';
+    }
   }
+
+  #showMoreButtonClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#films
+      .slice(this.#renderedFilmCount, this.#renderedFilmCount + FILM_COUNT_PER_STEP)
+      .forEach((movie) => this.#renderFilm(movie, filmComments));
+
+    this.#renderedFilmCount += FILM_COUNT_PER_STEP;
+
+    if (this.#renderedFilmCount >= this.#films.length) {
+      this.#showMoreButtonComponent.element.remove();
+      this.#showMoreButtonComponent.removeElement();
+    }
+  };
 
   #renderFilm(movie, comments) {
     const bodyElement = document.querySelector('body');
