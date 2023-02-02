@@ -7,7 +7,7 @@ import FilmCardView from '../view/film-card-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import PopupWholeView from '../view/popup-whole-view.js';
 import EmptyView from '../view/empty-view.js';
-import {render} from '../render.js';
+import {render} from '../framework/render.js';
 import NoFilterView from '../view/no-filter-view.js';
 import FooterStatisticView from '../view/footer-statistic-view.js';
 
@@ -15,6 +15,7 @@ let filmComments = [];
 
 const FILM_COUNT_PER_STEP = 5;
 
+const bodyElement = document.querySelector('body');
 const siteFooterStatisticElement = document.querySelector('.footer__statistics');
 
 export default class FilmPresenter {
@@ -64,9 +65,8 @@ export default class FilmPresenter {
       });
 
       if (this.#films.length > FILM_COUNT_PER_STEP) {
-        this.#showMoreButtonComponent = new ShowMoreButtonView();
+        this.#showMoreButtonComponent = new ShowMoreButtonView({onClick: this.#hanleShowMoreButtonClick});
         render(this.#showMoreButtonComponent, this.#containerMediumComponent.element);
-        this.#showMoreButtonComponent.element.addEventListener('click', this.#showMoreButtonClickHandler);
       }
 
       render(this.#footerStatisticComponent, siteFooterStatisticElement);
@@ -78,11 +78,20 @@ export default class FilmPresenter {
     }
   }
 
-  #showMoreButtonClickHandler = (evt) => {
-    evt.preventDefault();
+  #hanleShowMoreButtonClick = () => {
     this.#films
       .slice(this.#renderedFilmCount, this.#renderedFilmCount + FILM_COUNT_PER_STEP)
-      .forEach((movie) => this.#renderFilm(movie, filmComments));
+      .forEach((film) => {
+        filmComments = [];
+        film.comments.forEach((id) => {
+          this.#comments.forEach((comment) => {
+            if (comment.id === id) {
+              filmComments.push(comment);
+            }
+          });
+        });
+        this.#renderFilm(film, filmComments);
+      });
 
     this.#renderedFilmCount += FILM_COUNT_PER_STEP;
 
@@ -93,9 +102,23 @@ export default class FilmPresenter {
   };
 
   #renderFilm(movie, comments) {
-    const bodyElement = document.querySelector('body');
-    const filmComponent = new FilmCardView({movie});
-    const popupComponent = new PopupWholeView({movie, comments});
+
+    const filmComponent = new FilmCardView({
+      movie,
+      onFilmClick: () => {
+        openPopup.call(this);
+        document.addEventListener('keydown', escKeyDownHandler);
+      }
+    });
+
+    const popupComponent = new PopupWholeView({
+      movie,
+      comments,
+      onButtonCloseClick: () => {
+        closePopup.call(this);
+        document.removeEventListener('keydown', escKeyDownHandler);
+      }
+    });
 
     const openPopup = () => {
       bodyElement.appendChild(popupComponent.element);
@@ -115,16 +138,6 @@ export default class FilmPresenter {
         document.removeEventListener('keydown', escKeyDownHandler);
       }
     };
-
-    filmComponent.element.querySelector('.film-card__link').addEventListener('click', () => {
-      openPopup();
-      document.addEventListener('keydown', escKeyDownHandler);
-    });
-
-    popupComponent.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
-      closePopup();
-      document.removeEventListener('keydown', escKeyDownHandler);
-    });
 
     render(filmComponent, this.#containerSmallComponent.element);
   }

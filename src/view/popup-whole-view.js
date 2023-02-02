@@ -1,4 +1,4 @@
-import {createElement} from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import {convertDateFull, transformDuration, convertDateForComment} from '../utils.js';
 
 function createGenresTemplate(genre) {
@@ -225,29 +225,25 @@ function createPopupWholeTemplate(movie, commentsList) {
   </section>`;
 }
 
-export default class PopupWholeView {
-  #element = null;
+export default class PopupWholeView extends AbstractView {
   #movie = null;
   #comments = [];
+  #handleClickOnButtonClose;
 
-  constructor({movie, comments}) {
+  constructor({movie, comments, onButtonCloseClick}) {
+    super();
     this.#movie = movie;
     this.#comments = comments;
+    this.#handleClickOnButtonClose = onButtonCloseClick;
+
+    this.element.querySelector('.film-details__close-btn').addEventListener('click', this.#clickHandler);
   }
 
   get template() {
     return createPopupWholeTemplate(this.#movie, this.#comments);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
+  #clickHandler = () => {
+    this.#handleClickOnButtonClose();
+  };
 }
