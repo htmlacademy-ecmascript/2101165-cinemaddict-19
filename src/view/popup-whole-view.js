@@ -32,17 +32,29 @@ function createPopupFilmTemplate(movie) {
       genre,
       description
     },
-    // userDetails: {
-    //   watchlist,
-    //   alreadyWatched,
-    //   watchingDate,
-    //   favorite
-    // }
+    userDetails: {
+      watchlist,
+      alreadyWatched,
+      //   watchingDate,
+      favorite
+    }
   } = movie;
 
   const relDate = convertDateFull(date);
   const corrDuration = transformDuration(duration);
   const genreTemplate = createGenresTemplate(genre);
+
+  const isInWatchlist = watchlist
+    ? 'film-card__controls-item--active'
+    : '';
+
+  const isWatched = alreadyWatched
+    ? 'film-card__controls-item--active'
+    : '';
+
+  const isFavorite = favorite
+    ? 'film-card__controls-item--active'
+    : '';
 
 
   return `<div class="film-details__top-container">
@@ -107,9 +119,9 @@ function createPopupFilmTemplate(movie) {
     </div>
 
     <section class="film-details__controls">
-      <button type="button" class="film-details__control-button film-details__control-button--watchlist" id="watchlist" name="watchlist">Add to watchlist</button>
-      <button type="button" class="film-details__control-button film-details__control-button--active film-details__control-button--watched" id="watched" name="watched">Already watched</button>
-      <button type="button" class="film-details__control-button film-details__control-button--favorite" id="favorite" name="favorite">Add to favorites</button>
+      <button type="button" class="film-details__control-button film-details__control-button--watchlist ${isInWatchlist}" id="watchlist" name="watchlist">Add to watchlist</button>
+      <button type="button" class="film-details__control-button film-details__control-button--active film-details__control-button--watched ${isWatched}" id="watched" name="watched">Already watched</button>
+      <button type="button" class="film-details__control-button film-details__control-button--favorite${isFavorite}" id="favorite" name="favorite">Add to favorites</button>
     </section>
   </div>`;
 }

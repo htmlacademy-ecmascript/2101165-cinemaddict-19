@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import {NAMES, SURNAMES} from './const.js';
+import {NAMES, SURNAMES, FilterType} from './const.js';
 
 const DATE_FORMAT_FULL = 'D MMMM YYYY';
 const DATE_FORMAT = 'YYYY';
@@ -53,4 +53,10 @@ const getNumberOfComments = () => {
   return result;
 };
 
-export {convertDateFull, convertDateYear, transformDuration, getRandomArrayElement, getRandomInteger, getNamesAndSurnames, getRandomDate, getRandomArrayElements, getNumberOfComments, convertDateForComment};
+const filter = {
+  [FilterType.WATCHLIST]: (films) => films.filter((film) => film.userDetails.watchlist),
+  [FilterType.HISTORY]: (films) => films.filter((film) => film.userDetails.alreadyWatched),
+  [FilterType.FAVORITES]: (films) => films.filter((film) => film.userDetails.favorite),
+};
+
+export {convertDateFull, convertDateYear, transformDuration, getRandomArrayElement, getRandomInteger, getNamesAndSurnames, getRandomDate, getRandomArrayElements, getNumberOfComments, convertDateForComment, filter};

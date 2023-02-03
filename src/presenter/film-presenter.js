@@ -10,6 +10,7 @@ import EmptyView from '../view/empty-view.js';
 import {render} from '../framework/render.js';
 import NoFilterView from '../view/no-filter-view.js';
 import FooterStatisticView from '../view/footer-statistic-view.js';
+import {generateFilter} from '../mock/filter.js';
 
 let filmComments = [];
 
@@ -22,7 +23,6 @@ export default class FilmPresenter {
   #container = null;
   #model = null;
 
-  #filterComponent = new FilterView();
   #SortComponent = new SortView();
   #containerBigComponent = new ContainerFilmsBigView();
   #containerMediumComponent = new ContainerFilmsMediumlView();
@@ -46,7 +46,8 @@ export default class FilmPresenter {
     if (this.#films.length > 0) {
       const slicedFilms = this.#films.slice(0, Math.min(this.#films.length, FILM_COUNT_PER_STEP));
 
-      render(this.#filterComponent, this.#container);
+      this.#renderFilter();
+
       render(this.#SortComponent, this.#container);
       render(this.#containerBigComponent, this.#container);
       render(this.#containerMediumComponent, this.#containerBigComponent.element);
@@ -106,8 +107,8 @@ export default class FilmPresenter {
     const filmComponent = new FilmCardView({
       movie,
       onFilmClick: () => {
-        openPopup.call(this);
-        document.addEventListener('keydown', escKeyDownHandler);
+        openPopup(); // eslint-disable-line
+        document.addEventListener('keydown', escKeyDownHandler); // eslint-disable-line
       }
     });
 
@@ -115,8 +116,8 @@ export default class FilmPresenter {
       movie,
       comments,
       onButtonCloseClick: () => {
-        closePopup.call(this);
-        document.removeEventListener('keydown', escKeyDownHandler);
+        closePopup(); // eslint-disable-line
+        document.removeEventListener('keydown', escKeyDownHandler); // eslint-disable-line
       }
     });
 
@@ -140,5 +141,10 @@ export default class FilmPresenter {
     };
 
     render(filmComponent, this.#containerSmallComponent.element);
+  }
+
+  #renderFilter () {
+    const filters = generateFilter(this.#films);
+    render(new FilterView({filters}), this.#container);
   }
 }

@@ -1,7 +1,7 @@
 import {getRandomFilm} from '../mock/movie.js';
 import {mockComments} from '../mock/comment.js';
 
-const FILM_COUNT = 13;
+const FILM_COUNT = 15;
 
 export default class FilmModel {
   #films = Array.from({length: FILM_COUNT}, getRandomFilm);
