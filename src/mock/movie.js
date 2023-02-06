@@ -21,6 +21,12 @@ const mockMovies = [
       duration: getRandomInteger(50, 150),
       genre: GENRES.slice(0, getRandomInteger(1, 2)),
       description: getRandomArrayElements(DESCRIPTIONS),
+    },
+    userDetails: {
+      watchlist: true,
+      alreadyWatched: true,
+      watchingDate: getRandomDate(),
+      favorite: false,
     }
   },
   {
@@ -42,6 +48,12 @@ const mockMovies = [
       duration: getRandomInteger(50, 150),
       genre: [getRandomArrayElement(GENRES)],
       description: getRandomArrayElements(DESCRIPTIONS),
+    },
+    userDetails: {
+      watchlist: false,
+      alreadyWatched: false,
+      watchingDate: false,
+      favorite: true,
     }
   },
   {
@@ -63,6 +75,12 @@ const mockMovies = [
       duration: getRandomInteger(50, 150),
       genre: [getRandomArrayElement(GENRES)],
       description: getRandomArrayElements(DESCRIPTIONS),
+    },
+    userDetails: {
+      watchlist: new Boolean(getRandomInteger(0,1)),
+      alreadyWatched: false,
+      watchingDate: false,
+      favorite: new Boolean(getRandomInteger(0,1)),
     }
   },
   {
@@ -84,6 +102,12 @@ const mockMovies = [
       duration: getRandomInteger(50, 150),
       genre: [getRandomArrayElement(GENRES)],
       description: getRandomArrayElements(DESCRIPTIONS),
+    },
+    userDetails: {
+      watchlist: new Boolean(getRandomInteger(0,1)),
+      alreadyWatched: true,
+      watchingDate: getRandomDate(),
+      favorite: new Boolean(getRandomInteger(0,1)),
     }
   }
 ];

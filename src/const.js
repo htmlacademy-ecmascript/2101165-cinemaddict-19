@@ -38,4 +38,11 @@ const POSTERS = [
 
 const COUNTRIES = ['Russia', 'USA', 'India', 'China'];
 
-export {EMOTIONS, DESCRIPTIONS, TITLES, COMMENTS, NAMES, SURNAMES, GENRES, POSTERS, COUNTRIES};
+const FilterType = {
+  // All: 'Allmovies ',
+  WATCHLIST: 'Watchlist',
+  HISTORY: 'History',
+  FAVORITES: 'Favorites',
+};
+
+export {EMOTIONS, DESCRIPTIONS, TITLES, COMMENTS, NAMES, SURNAMES, GENRES, POSTERS, COUNTRIES, FilterType};

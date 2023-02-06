@@ -1,4 +1,4 @@
-import {createElement} from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 import {convertDateYear, transformDuration} from '../utils.js';
 
 function createFilmCardTemplate(movie) {
@@ -15,11 +15,29 @@ function createFilmCardTemplate(movie) {
       duration,
       genre,
       description,
+    },
+    userDetails: {
+      watchlist,
+      alreadyWatched,
+      // watchingDate,
+      favorite
     }
   } = movie;
 
   const year = convertDateYear(date);
   const correctDuration = transformDuration(duration);
+
+  const isInWatchlist = watchlist
+    ? 'film-card__controls-item--active'
+    : '';
+
+  const isWatched = alreadyWatched
+    ? 'film-card__controls-item--active'
+    : '';
+
+  const isFavorite = favorite
+    ? 'film-card__controls-item--active'
+    : '';
 
   return `<article class="film-card">
     <a class="film-card__link">
@@ -35,34 +53,30 @@ function createFilmCardTemplate(movie) {
       <span class="film-card__comments">${comments.length} Comments</span>
     </a>
     <div class="film-card__controls">
-      <button class="film-card__controls-item film-card__controls-item--add-to-watchlist" type="button">Add to watchlist</button>
-      <button class="film-card__controls-item film-card__controls-item--mark-as-watched" type="button">Mark as watched</button>
-      <button class="film-card__controls-item film-card__controls-item--favorite" type="button">Mark as favorite</button>
+      <button class="film-card__controls-item film-card__controls-item--add-to-watchlist ${isInWatchlist}" type="button">Add to watchlist</button>
+      <button class="film-card__controls-item film-card__controls-item--mark-as-watched ${isWatched}" type="button">Mark as watched</button>
+      <button class="film-card__controls-item film-card__controls-item--favorite ${isFavorite}" type="button">Mark as favorite</button>
     </div>
   </article>`;
 }
 
-export default class FilmCardView {
-  #element = null;
+export default class FilmCardView extends AbstractView {
   #movie = null;
+  #handleClickOnFilm = null;
 
-  constructor({movie}) {
+  constructor({movie, onFilmClick}) {
+    super();
     this.#movie = movie;
+    this.#handleClickOnFilm = onFilmClick;
+
+    this.element.querySelector('.film-card__link').addEventListener('click', this.#clickHandler);
   }
 
   get template() {
     return createFilmCardTemplate(this.#movie);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
+  #clickHandler = () => {
+    this.#handleClickOnFilm();
+  };
 }
