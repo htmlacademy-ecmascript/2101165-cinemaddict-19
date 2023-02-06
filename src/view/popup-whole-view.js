@@ -121,7 +121,7 @@ function createPopupFilmTemplate(movie) {
     <section class="film-details__controls">
       <button type="button" class="film-details__control-button film-details__control-button--watchlist ${isInWatchlist}" id="watchlist" name="watchlist">Add to watchlist</button>
       <button type="button" class="film-details__control-button film-details__control-button--watched ${isWatched}" id="watched" name="watched">Already watched</button>
-      <button type="button" class="film-details__control-button film-details__control-button--favorite${isFavorite}" id="favorite" name="favorite">Add to favorites</button>
+      <button type="button" class="film-details__control-button film-details__control-button--favorite ${isFavorite}" id="favorite" name="favorite">Add to favorites</button>
     </section>
   </div>`;
 }
@@ -261,7 +261,7 @@ export default class PopupWholeView extends AbstractView {
 
     this.element.querySelector('.film-details__control-button--watched').addEventListener('click', this.#onWatchedClickHandler);
 
-    // this.element.querySelector('.film-details__control-button--favorite').addEventListener('click', this.#onFavoriteClickHandler);
+    this.element.querySelector('.film-details__control-button--favorite').addEventListener('click', this.#onFavoriteClickHandler);
   }
 
   get template() {

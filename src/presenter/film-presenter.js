@@ -62,6 +62,7 @@ export default class FilmPresenter {
 
     if (this.#mode === Mode.OPEN) {
       replace(this.#filmPopupComponent, prevFilmPopupComponent);
+      replace(this.#filmCardComponent, prevFilmCardComponent);
     }
 
     remove(prevFilmCardComponent);

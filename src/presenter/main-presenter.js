@@ -28,9 +28,7 @@ export default class MainPresenter {
   #containerSmallComponent = new ContainerFilmsSmallView();
   #footerStatisticComponent = new FooterStatisticView();
   #showMoreButtonComponent = null;
-  #filmPresenter = new Map();
-
-  // #page = 1;
+  #filmsPresenter = new Map();
 
   #films = [];
   #comments = [];
@@ -112,7 +110,7 @@ export default class MainPresenter {
     });
 
     filmPresenter.init(movie, comments);
-    this.#filmPresenter.set(movie.id, filmPresenter);
+    this.#filmsPresenter.set(movie.id, filmPresenter);
   }
 
   #renderFilter () {
@@ -140,17 +138,16 @@ export default class MainPresenter {
       });
     });
 
-    this.#filmPresenter.get(updatedFilm.id).init(updatedFilm, filmComments);
+    this.#filmsPresenter.get(updatedFilm.id).init(updatedFilm, filmComments);
   };
 
   #handleModeChange = () => {
-    this.#filmPresenter.forEach((presenter) => presenter.resetView());
+    this.#filmsPresenter.forEach((presenter) => presenter.resetView());
   };
 
   #clearFilmsList() {
-    this.#filmPresenter.forEach((presenter) => presenter.destroy());
-    this.#filmPresenter.clear();
-    // this.#page = 1;
+    this.#filmsPresenter.forEach((presenter) => presenter.destroy());
+    this.#filmsPresenter.clear();
 
     remove(this.#showMoreButtonComponent);
   }
