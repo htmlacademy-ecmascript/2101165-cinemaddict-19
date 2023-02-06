@@ -1,9 +1,10 @@
 import {getRandomArrayElement, getRandomInteger, getNamesAndSurnames, getRandomDate, getRandomArrayElements} from '../utils.js';
 import {DESCRIPTIONS, TITLES, GENRES, POSTERS, COUNTRIES} from '../const.js';
+import {nanoid} from 'nanoid';
 
 const mockMovies = [
   {
-    id: getRandomInteger(1, 200),
+    id: nanoid(),
     comments: ['1', '2', '4'],
     filmInfo: {
       title: getRandomArrayElement(TITLES),
@@ -30,7 +31,7 @@ const mockMovies = [
     }
   },
   {
-    id: getRandomInteger(1, 200),
+    id: nanoid(),
     comments: ['2'],
     filmInfo: {
       title: getRandomArrayElement(TITLES),
@@ -57,7 +58,7 @@ const mockMovies = [
     }
   },
   {
-    id: getRandomInteger(1, 200),
+    id: nanoid(),
     comments: ['4', '3', '2', '1'],
     filmInfo: {
       title: getRandomArrayElement(TITLES),
@@ -80,11 +81,11 @@ const mockMovies = [
       watchlist: new Boolean(getRandomInteger(0,1)),
       alreadyWatched: false,
       watchingDate: false,
-      favorite: new Boolean(getRandomInteger(0,1)),
+      favorite: false,
     }
   },
   {
-    id: getRandomInteger(1, 200),
+    id: nanoid(),
     comments: [],
     filmInfo: {
       title: getRandomArrayElement(TITLES),
@@ -104,10 +105,10 @@ const mockMovies = [
       description: getRandomArrayElements(DESCRIPTIONS),
     },
     userDetails: {
-      watchlist: new Boolean(getRandomInteger(0,1)),
+      watchlist: true,
       alreadyWatched: true,
       watchingDate: getRandomDate(),
-      favorite: new Boolean(getRandomInteger(0,1)),
+      favorite: false,
     }
   }
 ];

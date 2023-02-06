@@ -63,20 +63,44 @@ function createFilmCardTemplate(movie) {
 export default class FilmCardView extends AbstractView {
   #movie = null;
   #handleClickOnFilm = null;
+  #onWatchListClick = null;
+  #onWatchedClick = null;
+  #onFavoriteClick = null;
 
-  constructor({movie, onFilmClick}) {
+  constructor({movie, onFilmClick, onWatchListClick, onWatchedClick, onFavoriteClick}) {
     super();
     this.#movie = movie;
     this.#handleClickOnFilm = onFilmClick;
+    this.#onWatchListClick = onWatchListClick;
+    this.#onWatchedClick = onWatchedClick;
+    this.#onFavoriteClick = onFavoriteClick;
 
-    this.element.querySelector('.film-card__link').addEventListener('click', this.#clickHandler);
+    this.element.querySelector('.film-card__link').addEventListener('click', this.#onFilmClickHandler);
+
+    this.element.querySelector('.film-card__controls-item--add-to-watchlist').addEventListener('click', this.#onWatchListClickHandler);
+
+    this.element.querySelector('.film-card__controls-item--mark-as-watched').addEventListener('click', this.#onWatchedClickHandler);
+
+    this.element.querySelector('.film-card__controls-item--favorite').addEventListener('click', this.#onFavoriteClickHandler);
   }
 
   get template() {
     return createFilmCardTemplate(this.#movie);
   }
 
-  #clickHandler = () => {
+  #onFilmClickHandler = () => {
     this.#handleClickOnFilm();
+  };
+
+  #onWatchListClickHandler = () => {
+    this.#onWatchListClick();
+  };
+
+  #onWatchedClickHandler = () => {
+    this.#onWatchedClick();
+  };
+
+  #onFavoriteClickHandler = () => {
+    this.#onFavoriteClick();
   };
 }

@@ -59,4 +59,8 @@ const filter = {
   [FilterType.FAVORITES]: (films) => films.filter((film) => film.userDetails.favorite),
 };
 
-export {convertDateFull, convertDateYear, transformDuration, getRandomArrayElement, getRandomInteger, getNamesAndSurnames, getRandomDate, getRandomArrayElements, getNumberOfComments, convertDateForComment, filter};
+function updateItem(items, update) {
+  return items.map((item) => item.id === update.id ? update : item);
+}
+
+export {updateItem, convertDateFull, convertDateYear, transformDuration, getRandomArrayElement, getRandomInteger, getNamesAndSurnames, getRandomDate, getRandomArrayElements, getNumberOfComments, convertDateForComment, filter};
