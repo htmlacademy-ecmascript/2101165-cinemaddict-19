@@ -45,15 +45,15 @@ function createPopupFilmTemplate(movie) {
   const genreTemplate = createGenresTemplate(genre);
 
   const isInWatchlist = watchlist
-    ? 'film-card__controls-item--active'
+    ? 'film-details__control-button--active'
     : '';
 
   const isWatched = alreadyWatched
-    ? 'film-card__controls-item--active'
+    ? 'film-details__control-button--active'
     : '';
 
   const isFavorite = favorite
-    ? 'film-card__controls-item--active'
+    ? 'film-details__control-button--active'
     : '';
 
 
@@ -120,8 +120,8 @@ function createPopupFilmTemplate(movie) {
 
     <section class="film-details__controls">
       <button type="button" class="film-details__control-button film-details__control-button--watchlist ${isInWatchlist}" id="watchlist" name="watchlist">Add to watchlist</button>
-      <button type="button" class="film-details__control-button film-details__control-button--active film-details__control-button--watched ${isWatched}" id="watched" name="watched">Already watched</button>
-      <button type="button" class="film-details__control-button film-details__control-button--favorite${isFavorite}" id="favorite" name="favorite">Add to favorites</button>
+      <button type="button" class="film-details__control-button film-details__control-button--watched ${isWatched}" id="watched" name="watched">Already watched</button>
+      <button type="button" class="film-details__control-button film-details__control-button--favorite ${isFavorite}" id="favorite" name="favorite">Add to favorites</button>
     </section>
   </div>`;
 }
@@ -240,22 +240,47 @@ function createPopupWholeTemplate(movie, commentsList) {
 export default class PopupWholeView extends AbstractView {
   #movie = null;
   #comments = [];
-  #handleClickOnButtonClose;
+  #handleClickOnButtonClose = null;
+  #handleClickOnWatchList = null;
+  #handleClickOnWatched = null;
+  #handleClickOnFavorite = null;
 
-  constructor({movie, comments, onButtonCloseClick}) {
+  constructor({movie, comments, onButtonCloseClick, onWatchListClick, onWatchedClick, onFavoriteClick}) {
     super();
     this.#movie = movie;
     this.#comments = comments;
     this.#handleClickOnButtonClose = onButtonCloseClick;
+    this.#handleClickOnWatchList = onWatchListClick;
+    this.#handleClickOnWatched = onWatchedClick;
+    this.#handleClickOnFavorite = onFavoriteClick;
 
-    this.element.querySelector('.film-details__close-btn').addEventListener('click', this.#clickHandler);
+
+    this.element.querySelector('.film-details__close-btn').addEventListener('click', this.#onButtonCloseClickHandler);
+
+    this.element.querySelector('.film-details__control-button--watchlist').addEventListener('click', this.#onWatchListClickHandler);
+
+    this.element.querySelector('.film-details__control-button--watched').addEventListener('click', this.#onWatchedClickHandler);
+
+    this.element.querySelector('.film-details__control-button--favorite').addEventListener('click', this.#onFavoriteClickHandler);
   }
 
   get template() {
     return createPopupWholeTemplate(this.#movie, this.#comments);
   }
 
-  #clickHandler = () => {
+  #onButtonCloseClickHandler = () => {
     this.#handleClickOnButtonClose();
+  };
+
+  #onWatchListClickHandler = () => {
+    this.#handleClickOnWatchList();
+  };
+
+  #onWatchedClickHandler = () => {
+    this.#handleClickOnWatched();
+  };
+
+  #onFavoriteClickHandler = () => {
+    this.#handleClickOnFavorite();
   };
 }
